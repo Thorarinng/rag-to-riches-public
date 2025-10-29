@@ -1,0 +1,53 @@
+{
+  "ticketing": [
+    {
+      "id": 1,
+      "title": "Password Reset",
+      "content": "If you are unable to access your account due to a forgotten password or believe your credentials may have been compromised, you can reset your password by navigating to the internal portal and clicking on the 'Forgot Password' link. You will be prompted to enter your registered email address and answer any security questions associated with your account. Once your identity is verified, you will receive an email with a secure, temporary link to create a new password. Ensure your new password adheres to the organization's security guidelines, including a minimum of 12 characters, a mix of uppercase and lowercase letters, numbers, and special characters. After resetting your password, it is recommended to log out from all devices and clear cached credentials to prevent unauthorized access. Additionally, consider enabling two-factor authentication for enhanced security, which will require an additional verification step when logging in from new devices or locations."
+    },
+    {
+      "id": 2,
+      "title": "Hardware Issue",
+      "content": "When encountering issues with any hardware, including laptops, desktops, monitors, printers, or peripherals, submit a detailed support ticket to ensure efficient troubleshooting. Include a high-resolution photo of the device showing any visible damage, error messages, or unusual behavior. Provide a thorough description of the problem, including when the issue first occurred, steps taken to reproduce the problem, any recent changes to the device such as software updates or hardware modifications, and the urgency of the issue based on your operational needs. If the hardware is under warranty or company lease, indicate this information in the ticket. Providing as much context as possible helps the IT support team to diagnose the issue quickly, schedule on-site visits if necessary, and prepare any replacement parts or equipment ahead of time. Additionally, mention if the issue is impacting business-critical workflows or deadlines so that priority can be appropriately assigned."
+    },
+    {
+      "id": 3,
+      "title": "Software Installation",
+      "content": "To request the installation of new software or updates to existing applications, submit a support ticket specifying the software name, version number, and any relevant license or subscription details. Clearly indicate the operating system and device type where the software will be installed, as compatibility requirements may vary. Describe the purpose of the software, any dependencies it has on other applications, and whether administrative privileges are required for installation. If the software is part of a departmental initiative, include the team or project name to assist in prioritization. Additionally, specify any deadlines for installation if the software is critical for an upcoming project or client deliverable. IT will review the request, verify licensing compliance, check for security vulnerabilities, and schedule the installation to minimize disruption to your workflow. Any post-installation troubleshooting or configuration assistance should be noted in the ticket."
+    },
+    {
+      "id": 4,
+      "title": "VPN Access",
+      "content": "To request VPN access for remote work or secure connections to internal networks, submit a ticket including your full name, department, manager approval, and a clear explanation of the business need for VPN access. Specify the devices and operating systems you intend to use for connecting remotely, and whether you require access to specific servers, databases, or internal applications. Outline any security requirements or restrictions that must be applied to your account, such as two-factor authentication or IP whitelisting. IT will review your request, verify authorization from your manager, configure the VPN client, and provide instructions for setup and connection. Include any deadlines if remote access is required urgently for meetings, client presentations, or time-sensitive projects. Regularly update your VPN access ticket if your role changes, access needs evolve, or you encounter connection issues."
+    },
+    {
+      "id": 5,
+      "title": "Account Lockout",
+      "content": "If your account has been locked due to multiple unsuccessful login attempts, or if you suspect unauthorized access, submit a support ticket immediately to regain access and ensure security. Include your username, the approximate time the lockout occurred, and any error messages you received. Describe the circumstances that may have led to the lockout, such as failed login attempts from a new device or forgotten password attempts. The IT support team will verify your identity through security questions or manager confirmation before unlocking the account. After access is restored, it is strongly recommended to reset your password, enable two-factor authentication, and review your recent account activity to detect any unusual or suspicious actions. Documenting all details in your ticket ensures quicker resolution and reduces downtime for critical tasks or communication."
+    }
+  ],
+  "user_management": [
+    {
+      "id": 1,
+      "title": "Assign Roles",
+      "content": "Admins can assign roles to users within the Employee Management System (EMS) under the 'User Roles' section. When assigning roles, it is essential to consider the principle of least privilege, ensuring that users only receive the permissions necessary to perform their job functions. For example, a manager may require access to employee performance data, while a new hire should only have basic access to their personal profile and learning modules. Document each role assignment in the system notes to maintain a clear audit trail. If users require temporary elevated privileges for specific projects, ensure the expiration date is set, and revoke access once the task is complete. Periodically review role assignments to maintain security compliance and avoid privilege creep, which can result from users accumulating unnecessary permissions over time. Include any manager approvals or departmental notes when submitting a role change request to maintain accountability."
+    },
+    {
+      "id": 2,
+      "title": "Create User",
+      "content": "New user accounts can be created by HR or designated administrators via the onboarding portal. Provide all required personal and employment information, including full name, job title, department, manager, employment type, and start date. Specify required access permissions, email aliases, and any additional systems the new employee will need access to, such as payroll, internal communication tools, or project management platforms. If the new hire is a contractor or temporary worker, indicate the access duration and any special restrictions. Attach any relevant HR documentation, such as signed contracts or NDAs, to the ticket to ensure compliance with company policies. Once the account is created, notify the employee and their manager with login instructions, initial passwords, and guidance for updating security settings. This detailed process ensures seamless onboarding while maintaining compliance and security standards."
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "title": "Ticket Updates",
+      "content": "Slack notifications for ticket updates can be enabled through the Settings > Notifications section in your profile. By activating these notifications, you will receive real-time updates whenever a ticket assigned to you is updated, including status changes, comments from IT support, priority adjustments, or closure confirmations. You can customize the notification frequency to receive immediate alerts, hourly digests, or daily summaries, depending on your preference and workload. Notifications will include critical metadata, such as ticket ID, category, and assigned technician, as well as any attachments or screenshots submitted by other users. Utilizing these notifications ensures that you remain informed about ongoing issues, deadlines, and updates without needing to manually check the ticketing system. For teams working on multiple tickets, configuring channel-specific notifications in Slack can enhance collaboration and reduce response times."
+    },
+    {
+      "id": 2,
+      "title": "Email Alerts",
+      "content": "Email alerts are automatically sent whenever a ticket undergoes a status change, including creation, escalation, assignment, resolution, or closure. Each email contains detailed information about the ticket, such as the title, description, submitter, assigned technician, and priority level. Users can configure alert preferences to receive notifications for all tickets, only high-priority issues, or tickets related to specific departments or categories. Alerts may also include links to knowledge base articles, troubleshooting guides, or recommended next steps. Ensuring that your email address in the system is up to date is crucial for receiving these notifications. Additionally, consider setting up email filters or folders to organize alerts efficiently and avoid missing critical updates amidst general correspondence. These notifications help maintain workflow continuity, ensure timely responses, and provide a clear record of all ticket-related communications for future reference."
+    }
+  ]
+}
