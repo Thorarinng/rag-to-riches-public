@@ -7,6 +7,7 @@ from nltk.tokenize import sent_tokenize
 import numpy as np
 
 nltk.download("punkt")
+nltk.download("punkt_tab")  # needed by NLTK 3.9+
 
 # -------------------------
 # Documents

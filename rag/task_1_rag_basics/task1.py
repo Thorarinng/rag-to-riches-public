@@ -8,6 +8,7 @@ import numpy as np
 
 import nltk
 nltk.download("punkt")
+nltk.download("punkt_tab")  # needed by NLTK 3.9+
 from nltk.tokenize import sent_tokenize
 
 # -------------------------
@@ -21,12 +22,12 @@ docs = [
 ]
 
 # =========================
-# TODO 1: Initialize embedding model
+# Setup: embedding model (already done for you)
 # =========================
-model = SentenceTransformer("all-MiniLM-L6-v2")  # TODO: initialize SentenceTransformer model
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # =========================
-# TODO 3: Apply chunking to all documents
+# TODO 1: Apply chunking to all documents
 # =========================
 all_chunks = []
 chunk_titles = []
@@ -35,16 +36,16 @@ chunk_titles = []
 # TODO: keep track of chunk titles in chunk_titles
 
 # =========================
-# TODO 4: Encode chunks into embeddings
+# TODO 2: Encode chunks into embeddings
 # =========================
 embeddings = None  # TODO: encode all_chunks into embeddings
 
 # =========================
-# TODO 5: Build FAISS index and add embeddings
+# TODO 3: Build FAISS index and add embeddings
 index = None  # TODO: create FAISS index and add embeddings
 
 # =========================
-# TODO 6: Implement retrieval function
+# TODO 4: Implement retrieval function
 def ask_rag(query: str, k=1):
     """
     1. Encode the query into an embedding using the SentenceTransformer model.
@@ -57,7 +58,7 @@ def ask_rag(query: str, k=1):
     return None
 
 # =========================
-# TODO 7: Demo / Test
+# TODO 5: Demo / Test
 if __name__ == "__main__":
     queries = [
         "How does the notification service send alerts?",
