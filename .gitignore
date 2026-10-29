@@ -1,0 +1,4 @@
+# Local only, never commit
+survey/
+env.txt
+.env
