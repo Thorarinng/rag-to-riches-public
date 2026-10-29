@@ -6,6 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 import nltk
 nltk.download("punkt")
+nltk.download("punkt_tab")  # needed by NLTK 3.9+
 from nltk.tokenize import sent_tokenize
 
 
@@ -118,7 +119,7 @@ def fetch_from_mcp(mcp_name, query, k=1):
     faiss.normalize_L2(q_emb)
     scores, idxs = index.search(q_emb, k)
 
-    print(f"Vector Search result in '{mcp_name}' with score: {scores[0]}")
+    print(f"Vector Search result in '{mcp_name}' with L2 distance (lower = closer): {scores[0]}")
     
     # TODO: return list of top-k results
     results = [texts[i] for i in idxs[0]]
