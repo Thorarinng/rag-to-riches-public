@@ -5,6 +5,9 @@
 # Name of virtual environment folder
 VENV := venv
 
+# Python used to create the venv (override with: make setup PY=python3.12)
+PY ?= python3
+
 # Path to pip inside venv
 PIP := $(VENV)/bin/pip
 PYTHON := $(VENV)/bin/python
@@ -42,8 +45,11 @@ setup: $(VENV)
 # Create virtual environment
 # -----------------------------
 $(VENV):
+	@$(PY) -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)' || \
+		{ echo "❌ Python 3.10+ is required, found: $$($(PY) --version 2>&1)"; \
+		  echo "   Install a newer Python, then run: make setup PY=python3.12"; exit 1; }
 	@echo "Creating virtual environment..."
-	python3 -m venv $(VENV)
+	$(PY) -m venv $(VENV)
 
 # -----------------------------
 # Clean virtual environment

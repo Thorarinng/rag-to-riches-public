@@ -7,12 +7,13 @@ import os
 
 import nltk
 nltk.download("punkt")
+nltk.download("punkt_tab")  # needed by NLTK 3.9+
 from nltk.tokenize import sent_tokenize
 
 # =========================
 # TODO 0: Load datasets
 # =========================
-# Hint: create 'datasets.json' with MCP datasets
+# The MCP datasets are already in data/datasets.json (nothing to do here)
 base_dir = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(base_dir, "..", "..", "data", "datasets.json")
 

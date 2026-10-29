@@ -8,6 +8,7 @@ import numpy as np
 
 import nltk
 nltk.download("punkt")
+nltk.download("punkt_tab")  # needed by NLTK 3.9+
 from nltk.tokenize import sent_tokenize
 
 # -------------------------
@@ -21,12 +22,12 @@ docs = [
 ]
 
 # =========================
-# TODO 1: Initialize embedding model
+# Setup: embedding model (already done for you)
 # =========================
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # =========================
-# TODO 3: Apply chunking to all documents
+# TODO 1: Apply chunking to all documents
 # =========================
 all_chunks = []
 chunk_titles = []
@@ -39,19 +40,19 @@ for doc in docs:
 print("All chunks:", all_chunks)
 
 # =========================
-# TODO 4: Encode chunks into embeddings
+# TODO 2: Encode chunks into embeddings
 # =========================
 embeddings = model.encode(all_chunks, convert_to_numpy=True)
 
 # =========================
-# TODO 5: Build FAISS index and add embeddings
+# TODO 3: Build FAISS index and add embeddings
 # =========================
 dimension = embeddings.shape[1]
 index = faiss.IndexFlatL2(dimension)
 index.add(embeddings)
 
 # =========================
-# TODO 6: Implement retrieval function
+# TODO 4: Implement retrieval function
 # =========================
 def ask_rag(query: str, k=1):
     """
@@ -64,7 +65,7 @@ def ask_rag(query: str, k=1):
     return {s: all_chunks[i] for s, i in zip(scores[0], indices[0])}
 
 # =========================
-# TODO 7: Demo / Test
+# TODO 5: Demo / Test
 # =========================
 if __name__ == "__main__":
     queries = [
@@ -73,7 +74,7 @@ if __name__ == "__main__":
     ]
 
     for q in queries:
-        results = ask_rag(q, k=3)  # retrieve top 2 chunks
+        results = ask_rag(q, k=3)  # retrieve top 3 chunks
         print(f"\nQ: {q}")
         print("A:")
         for s, r in results.items():

@@ -2,6 +2,35 @@
 
 ---
 
+## Setup (do this before we start)
+
+You need **Python 3.10 or newer** (check with `python3 --version`).
+
+```bash
+make setup                   # creates venv, installs packages, creates .env
+# On macOS the default python3 is often 3.9. If so, use a newer one:
+# make setup PY=python3.12
+source venv/bin/activate     # Windows: venv\Scripts\activate
+```
+
+- **Task 1 and 2** need no API key.
+- **Task 3** uses OpenAI for the final answer. Put the key from your mentor in `.env`
+  as `OPENAI_API_KEY=...` (`make setup` creates the file with `OPENAI_API_KEY=TODO`).
+  Without a key, Task 3 still routes and retrieves, but the LLM step is skipped.
+
+Files for each task:
+
+| Task | Your file | Reference solution |
+| --- | --- | --- |
+| 1 | `rag/task_1_rag_basics/task1.py` | `task1_solution.py` |
+| 2 | `rag/task_2_mcp_and_agents/task2.py` | `task2_solution.py` |
+| 3 | `rag/task3_rag_completed.py` | `task3_rag_completed_solution.py` |
+
+Run a file from the repo root, e.g. `python rag/task_1_rag_basics/task1.py`.
+Task 3 imports the Task 2 solution, so you can do Task 3 even if Task 2 is unfinished.
+
+---
+
 ## Section 1: Basic Vector Search (20 min)
 
 **Goal:** Understand embeddings, FAISS indexing, and simple retrieval.
@@ -87,13 +116,16 @@
 ### TODOs
 
 - [ ] Initialize a `chat_history` list to store previous queries and answers
+- [ ] Write `select_mcp(query, threshold)` that returns **every** MCP handler whose cosine similarity is above the threshold (best first), or an empty list
 - [ ] Write `full_rag_pipeline(query: str)` that:
   - Adds user query to chat history
-  - Uses `select_mcp` to pick the best MCP
-  - Calls the MCP handler
-  - Adds the MCP response to chat history
-  - Returns the response
+  - Uses `select_mcp` to pick the relevant MCPs
+  - Calls each MCP handler and combines the results
+  - Asks the OpenAI chat model to write the answer (send the earlier `chat_history` too, so follow-up questions work)
+  - If no MCP matches, answers "We cannot answer that." without calling the LLM
+  - Adds the answer to chat history and returns it
 - [ ] Test multi-turn interaction with at least 2–3 queries in sequence
+- [ ] Test the fallback with an off-topic question, e.g. "What is the weather in Bergen tomorrow?"
 - [ ] Optional: Modify MCPs to aggregate top-k FAISS results and summarize
 - [ ] Optional: Implement fallback MCP or default response for low similarity queries
 - [ ] Optional: Integrate an LLM to rewrite or summarize responses
