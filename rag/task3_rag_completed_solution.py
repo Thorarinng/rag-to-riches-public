@@ -26,11 +26,15 @@ from task_2_mcp_and_agents.task2_solution import mcp_embeddings, mcp_names, mcps
 # OpenAI client (chat only)
 # -------------------------
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise ValueError("❌ OPENAI_API_KEY not found in .env file")
+HAS_KEY = bool(OPENAI_API_KEY) and OPENAI_API_KEY != "TODO"
 
-print(f"✅ OpenAI token loaded: {OPENAI_API_KEY[:8]}...")
-client = OpenAI(api_key=OPENAI_API_KEY)
+if HAS_KEY:
+    print("✅ OpenAI key loaded")
+    client = OpenAI(api_key=OPENAI_API_KEY)
+else:
+    # Retrieval still works without a key; only the LLM summary is skipped.
+    print("⚠️  No OPENAI_API_KEY in .env (still 'TODO'?). Answers will be the raw retrieved text.")
+    client = None
 
 # -------------------------
 # SentenceTransformer model (embeddings)
@@ -66,17 +70,25 @@ def select_mcp(query: str, threshold: float = 0.2):
     return [mcps[mcp_names[i]]['handler'] for i in selected_indices]
 
 
-def stream_openai_summary(query: str, combined_context: str):
+def stream_openai_summary(query: str, combined_context: str, history=None):
     """
     Stream a summarized answer from OpenAI chat model for a given query and context.
-    
+    `history` is the earlier conversation (chat_history without the current query),
+    so follow-up questions can refer back to it.
+
     Yields:
         str: partial chunks of the assistant's response as they arrive.
     """
+    if client is None:
+        # No API key: return the retrieved text as-is.
+        yield combined_context
+        return
+
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant that summarizes MCP responses."},
+            {"role": "system", "content": "You are a helpful assistant that summarizes MCP responses. Use the earlier conversation to understand follow-up questions."},
+            *(history or []),
             {"role": "user", "content": f"User question: {query}\n\nMCP responses:\n{combined_context}"}
         ],
         stream=True
@@ -95,6 +107,7 @@ def stream_openai_summary(query: str, combined_context: str):
 # -------------------------
 def full_rag_pipeline(query: str, threshold: float = 0.1):
     """Run query through MCPs and summarize with OpenAI chat model."""
+    previous_turns = chat_history[-6:]  # last few messages, sent to the LLM as context
     chat_history.append({"role": "user", "content": query})
     handlers = select_mcp(query, threshold)
 
@@ -108,14 +121,16 @@ def full_rag_pipeline(query: str, threshold: float = 0.1):
 
     # Combine responses
     if responses == []:
+        # Fallback: no MCP is confident, so don't ask the LLM to guess.
         print("MCP CANNOT ANSWER THAT")
-        combined_context = "We cannot answer that."
-    else:
-        combined_context = "\n---\n".join(["".join(res) for res in responses])
-    
+        final_answer = "We cannot answer that."
+        chat_history.append({"role": "assistant", "content": final_answer})
+        return final_answer
+
+    combined_context = "\n---\n".join(["".join(res) for res in responses])
     print(f"MCP responses: {responses}")  # Optional logging
 
-    final_answer = "".join(stream_openai_summary(query=query, combined_context=combined_context))
+    final_answer = "".join(stream_openai_summary(query=query, combined_context=combined_context, history=previous_turns))
     chat_history.append({"role": "assistant", "content": final_answer})
 
     return final_answer
@@ -129,7 +144,7 @@ if __name__ == "__main__":
         "Who can reset user passwords?",
         "Send me an alert when tickets update",
         "I cant log in anymore",
-        "What time is it?",
+        "What is the weather in Bergen tomorrow?",
         "Can a woodchucker chuck wood if the wood chusk wood?",
     ]
 

@@ -26,10 +26,15 @@ from task_2_mcp_and_agents.task2_solution import mcp_embeddings, mcp_names, mcps
 # Initialize OpenAI client (chat only)
 # -------------------------
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise ValueError("❌ OPENAI_API_KEY not found in .env file")
+HAS_KEY = bool(OPENAI_API_KEY) and OPENAI_API_KEY != "TODO"
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+if HAS_KEY:
+    client = OpenAI(api_key=OPENAI_API_KEY)
+else:
+    # Tasks 1-2 and the retrieval part of Task 3 work without a key.
+    # Ask a mentor for a key and put it in .env as OPENAI_API_KEY=...
+    print("⚠️  No OPENAI_API_KEY in .env (still 'TODO'?). The LLM step will not work yet.")
+    client = None
 
 # =========================
 # TODO: Initialize the sentence transformer model
@@ -65,7 +70,8 @@ def full_rag_pipeline(query: str):
     2. Use select_mcp to pick relevant MCPs.
     3. Execute each MCP handler and collect responses.
     4. Combine responses.
-    5. Use OpenAI chat model to summarize / finalize answer.
+    5. Use OpenAI chat model to summarize / finalize answer
+       (pass the earlier chat_history messages too, so follow-ups work).
     6. Store assistant response in chat_history.
     7. Return the final combined response.
     """
